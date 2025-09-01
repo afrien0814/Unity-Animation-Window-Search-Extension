@@ -22,7 +22,7 @@ namespace RedCandleGames.Editor
         
         private static void OnEditorUpdate()
         {
-            var animationWindow = GetAnimationWindow();
+            var animationWindow = AnimationWindowExtensions.GetAnimationWindow();
             
             if (animationWindow != null)
             {
@@ -37,24 +37,7 @@ namespace RedCandleGames.Editor
                 CleanupMinimalUI();
             }
         }
-        
-        private static EditorWindow GetAnimationWindow()
-        {
-            var assembly = typeof(EditorWindow).Assembly;
-            var animationWindowType = assembly.GetType("UnityEditor.AnimationWindow");
-            
-            if (animationWindowType != null)
-            {
-                var windows = Resources.FindObjectsOfTypeAll(animationWindowType);
-                if (windows.Length > 0)
-                {
-                    return windows[0] as EditorWindow;
-                }
-            }
-            
-            return null;
-        }
-        
+
         private static void InjectMinimalUI(EditorWindow animWindow)
         {
             try
