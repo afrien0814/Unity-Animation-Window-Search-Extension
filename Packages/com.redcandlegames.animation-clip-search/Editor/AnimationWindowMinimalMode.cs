@@ -12,6 +12,8 @@ namespace RedCandleGames.Editor
     [InitializeOnLoad]
     public static class AnimationWindowMinimalMode
     {
+        private const float _checkingInterval = 1 / 10f;
+        private static double _lastCheckingTime;
         private static Button searchButton;
         private static EditorWindow lastAnimationWindow;
         
@@ -22,6 +24,12 @@ namespace RedCandleGames.Editor
         
         private static void OnEditorUpdate()
         {
+            var curTime = EditorApplication.timeSinceStartup;
+            if (curTime - _lastCheckingTime < _checkingInterval)
+                return;
+
+            _lastCheckingTime = curTime;
+
             var animationWindow = AnimationWindowExtensions.GetAnimationWindow();
             
             if (animationWindow != null)
