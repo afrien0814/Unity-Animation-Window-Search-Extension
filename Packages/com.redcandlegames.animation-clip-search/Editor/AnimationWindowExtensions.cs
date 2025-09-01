@@ -35,18 +35,12 @@ namespace RedCandleGames.Editor
             }
         }
         
-        private static EditorWindow GetAnimationWindow()
+        internal static EditorWindow GetAnimationWindow()
         {
-            System.Type animationWindowType = System.Type.GetType("UnityEditor.AnimationWindow, UnityEditor");
-            if (animationWindowType != null)
-            {
-                UnityEngine.Object[] windows = Resources.FindObjectsOfTypeAll(animationWindowType);
-                if (windows.Length > 0)
-                {
-                    return windows[0] as EditorWindow;
-                }
-            }
-            return null;
+            if (!EditorWindow.HasOpenInstances<AnimationWindow>())
+                return null;
+
+            return EditorWindow.GetWindow<AnimationWindow>(null, false);
         }
         
         private static void OnClipSelectedFromSearch(AnimationClip clip)
